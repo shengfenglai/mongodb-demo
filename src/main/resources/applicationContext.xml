@@ -10,6 +10,8 @@
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+
+    <context:annotation-config/>
     <context:component-scan base-package="com.allen"/>
     <context:property-placeholder location="classpath:mongodb.properties" ignore-resource-not-found="true"
                                   ignore-unresolvable="true"/>
@@ -22,10 +24,11 @@
     <!--连接池工厂配置-->
     <mongo:db-factory dbname="${mongo.dbname}" username="${mongo.username}" password="${mongo.password}"
                       mongo-ref="mongo"/>
+
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
     </bean>
-    
+
     <!--实体映射自动扫描注入的包-->
     <mongo:mapping-converter>
         <mongo:custom-converters base-package="com.allen"/>
