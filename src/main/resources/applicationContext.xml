@@ -1,38 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-       xsi:schemaLocation=
-               "http://www.springframework.org/schema/context
-          http://www.springframework.org/schema/context/spring-context-4.0.xsd
-          http://www.springframework.org/schema/data/mongo
-          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
-          http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/data/mongo 
+	http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.allen"/>
-    <context:property-placeholder location="classpath:mongodb.properties" ignore-resource-not-found="true"
-                                  ignore-unresolvable="true"/>
+	<context:property-placeholder location="classpath:mongodb.properties" />
 
-    <!--连接池配置-->
-    <mongo:mongo host="${mongo.host}" port="${mongo.port}">
-        <mongo:options connections-per-host="${mongo.options.connections-per-host}"/>
-    </mongo:mongo>
+	<mongo:mongo-client id="mongo" replica-set="${mongo.hostport}">
+		<mongo:client-options connections-per-host="${mongo.connectionsPerHost}"
+			threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+			connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}"
+			socket-timeout="${mongo.socketTimeout}" />
+	</mongo:mongo-client>
 
-    <!--连接池工厂配置-->
-    <mongo:db-factory dbname="${mongo.dbname}" username="${mongo.username}" password="${mongo.password}"
-                      mongo-ref="mongo"/>
+	<mongo:db-factory id="mongoDbFactory" dbname="test"
+		mongo-ref="mongo" />
 
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
-    </bean>
-
-    <!--实体映射自动扫描注入的包-->
-    <mongo:mapping-converter>
-        <mongo:custom-converters base-package="com.allen"/>
-    </mongo:mapping-converter>
-
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
 
 </beans>

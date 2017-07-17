@@ -43,14 +43,14 @@ public class MongoDBTest {
 
 	@Test
 	public void testDelete() {
-		mongoTemplate.remove(Query.query(Criteria.where("id").is("5910260c4b3acc77b4558e4d").and("siteId").is(1)),
+		mongoTemplate.remove(Query.query(Criteria.where("id").is("596c64f944f07e6d8ddc0339").and("siteId").is(1)),
 				NoticeBean.class);
 	}
 
 	@Test
 	public void testModify() {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("id").is("5910260c4b3acc77b4558e4d").and("siteId").is(1));
+		query.addCriteria(Criteria.where("id").is("596c64f944f07e6d8ddc0339").and("siteId").is(1));
 		Update update = new Update();
 		System.out.println(new DateTime().toDate());
 		update.set("updateTime", new DateTime().toDate());
@@ -61,7 +61,7 @@ public class MongoDBTest {
 	@Test
 	public void testFind() {
 		NoticeBean noticeBean = mongoTemplate.findOne(
-				Query.query(Criteria.where("id").is("5910260c4b3acc77b4558e4d").and("siteId").is(1)), NoticeBean.class);
+				Query.query(Criteria.where("id").is("596c64f944f07e6d8ddc0339").and("siteId").is(1)), NoticeBean.class);
 
 		System.out.println(noticeBean.getCreator());
 

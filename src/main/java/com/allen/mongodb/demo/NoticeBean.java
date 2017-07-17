@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by Allen on 2017/5/8 0008.
+ * Created by Allen on 2017/5/8
  */
-@Document
+@Document(collection = "gta.rate")
 public class NoticeBean {
 
 	public NoticeBean() {

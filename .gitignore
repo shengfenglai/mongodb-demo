@@ -4,3 +4,4 @@
 /.project
 /.idea
 /mongodb-demo.iml
+*.iml
